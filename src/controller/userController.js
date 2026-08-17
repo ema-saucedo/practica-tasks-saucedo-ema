@@ -1,8 +1,8 @@
-import User from "../models/user.js";
+import User from "../model/modelUser.js";
 export const createUser = async (req, res) => {
     try {
         const { name, email, password } = req.body;
-        const user = await user.create({
+        const user = await User.create({
             name,
             email,
             password,
@@ -18,7 +18,7 @@ export const createUser = async (req, res) => {
 export const getUsers = async (req, res) => {
     try {
 
-        const users = await user.findAll();
+        const users = await User.findAll();
 
         res.status(200).json(users);
     } catch (error) {
