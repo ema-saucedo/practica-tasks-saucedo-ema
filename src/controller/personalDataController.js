@@ -1,4 +1,4 @@
-import { User, PersonalData } from "../model/index.js";
+import { User, personalData } from "../model/index.js";
 
 export const createPersonalData = async (req, res) => {
     try {
@@ -17,14 +17,14 @@ export const createPersonalData = async (req, res) => {
             });
         }
 
-        const alreadyExists = await PersonalData.findOne({ where: { user_id: userId } });
+        const alreadyExists = await personalData.findOne({ where: { user_id: userId } });
         if (alreadyExists) {
             return res.status(400).json({
                 message: "Este usuario ya tiene datos personales cargados",
             });
         }
 
-        const personalData = await PersonalData.create({
+        const newPersonalData = await personalData.create({
             dni,
             birthDate,
             address,
@@ -33,7 +33,7 @@ export const createPersonalData = async (req, res) => {
 
         res.status(201).json({
             message: "Datos personales creados",
-            personalData,
+            personalData: newPersonalData,
         });
     } catch (error) {
         res.status(500).json({
@@ -45,8 +45,8 @@ export const createPersonalData = async (req, res) => {
 
 export const getPersonalData = async (req, res) => {
     try {
-        const personalDatas = await PersonalData.findAll({
-            include: [{ model: User, as: "user" }],
+        const personalDatas = await personalData.findAll({
+            include: [{ model: User, as: "user", attributes: ["id", "name", "email"] }],
         });
 
         res.status(200).json(personalDatas);

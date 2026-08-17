@@ -1,27 +1,27 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../config/database.js";
+import { sequelize } from "../config/database.js";
 
 export const personalData = sequelize.define("dataPr", {
-    
+
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-    
+
     dni: {
         type: DataTypes.STRING(8),
-        allownull: false,
+        allowNull: false,
         unique: true
     },
 
     birthDate: {
         type: DataTypes.STRING(10),
-        allownull: false
+        allowNull: false
     },
 
     address: {
         type: DataTypes.STRING,
-        allownull: false
+        allowNull: false
     }
 });

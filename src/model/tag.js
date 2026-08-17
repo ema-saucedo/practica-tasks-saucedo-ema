@@ -1,14 +1,14 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../config/database.js";
+import { sequelize } from "../config/database.js";
 
 export const tag = sequelize.define("tag", {
-    
+
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-    
+
     name: {
         type: DataTypes.STRING(8),
         allowNull: false,

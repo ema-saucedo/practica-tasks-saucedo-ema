@@ -1,8 +1,8 @@
-import User from "./user.js";
-import Task from "./task.js";
-import personalData from "./personalData.js";
-import Tag from "./tag.js";
-import TaskTag from "./taskTag.js";
+import { modelUser as User } from "./modelUser.js";
+import { Task } from "./modelTask.js";
+import { personalData } from "./personalData.js";
+import { tag as Tag } from "./tag.js";
+import { taskTag as TaskTag } from "./taskTag.js";
 
 User.hasMany(Task, { foreignKey: "user_id", as: "tasks" });
 

@@ -1,4 +1,5 @@
-import { modelUser as User } from "../model/modelUser.js";
+import { User, Task } from "../model/index.js";
+
 export const createUser = async (req, res) => {
     try {
         const { name, email, password } = req.body;
@@ -18,7 +19,9 @@ export const createUser = async (req, res) => {
 export const getUsers = async (req, res) => {
     try {
 
-        const users = await User.findAll();
+        const users = await User.findAll({
+            include: [{ model: Task, as: "tasks" }],
+        });
 
         res.status(200).json(users);
     } catch (error) {
@@ -34,7 +37,9 @@ export const getUserById = async (req, res) => {
         const { id } = req.params;
 
 
-        const user = await User.findByPk(id);
+        const user = await User.findByPk(id, {
+            include: [{ model: Task, as: "tasks" }],
+        });
 
 
         if (!user) {
