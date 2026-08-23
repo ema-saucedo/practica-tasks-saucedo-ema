@@ -1,4 +1,4 @@
-import { body } from "express-validator";
+import { body, param } from "express-validator";
 import { modelUser } from "../model/modelUser.js";
 
 export const userValidations = [
@@ -27,4 +27,18 @@ export const userValidations = [
     .withMessage("La contraseña es obligatoria")
     .isLength({ min: 6 })
     .withMessage("La contraseña debe tener al menos 6 caracteres")
+];
+export const userIdValidation = [
+    param("id")
+        .isInt({ min: 1 })
+        .withMessage("El id debe ser un entero positivo")
+        .custom(async (id) => {
+            const user = await modelUser.findByPk(id);
+
+            if (!user) {
+                throw new Error("El usuario no existe");
+            }
+
+            return true;
+        })
 ];
