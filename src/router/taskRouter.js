@@ -1,6 +1,7 @@
 import {
   taskValidations,
   taskIdValidation,
+  updateTaskValidations
 } from "../validations/taskValidations.js";
 import { validate } from "../middlewares/validate.js";
 import express from "express";
@@ -16,5 +17,5 @@ export const router = express.Router();
 router.post("/", taskValidations, validate, createTask);
 router.get("/", getTasks);
 router.get("/:id", taskIdValidation, validate, getTaskId);
-router.put("/:id", taskIdValidation, validate, updateTask);
+router.put("/:id", taskIdValidation, updateTaskValidations, validate, updateTask);
 router.delete("/:id", taskIdValidation, validate, deleteTask);

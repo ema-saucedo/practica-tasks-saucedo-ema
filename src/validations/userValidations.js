@@ -42,3 +42,30 @@ export const userIdValidation = [
             return true;
         })
 ];
+export const updateUserValidations = [
+    body("name")
+        .optional()
+        .notEmpty()
+        .withMessage("El nombre no puede estar vacio"),
+
+    body("email")
+        .optional()
+        .isEmail()
+        .withMessage("El email no es valido")
+        .custom(async (email, { req }) => {
+            const user = await modelUser.findOne({
+                where: { email: email }
+            });
+
+            if (user && user.id !== Number(req.params.id)) {
+                throw new Error("El email ya esta registrado");
+            }
+
+            return true;
+        }),
+
+    body("password")
+        .optional()
+        .isLength({ min: 6 })
+        .withMessage("La contraseña debe tener al menos 6 caracteres")
+];

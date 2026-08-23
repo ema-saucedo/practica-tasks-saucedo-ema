@@ -41,3 +41,19 @@ export const taskIdValidation = [
             return true;
         })
 ];
+export const updateTaskValidations = [
+    body("title")
+        .optional()
+        .notEmpty()
+        .withMessage("El titulo no puede estar vacio"),
+
+    body("description")
+        .optional()
+        .notEmpty()
+        .withMessage("La descripcion no puede estar vacia"),
+
+    body("isComplete")
+        .optional()
+        .isBoolean()
+        .withMessage("isComplete debe ser un valor booleano")
+];
