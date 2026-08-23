@@ -1,10 +1,20 @@
+import {
+  taskValidations,
+  taskIdValidation,
+} from "../validations/taskValidations.js";
+import { validate } from "../middlewares/validate.js";
 import express from "express";
-import { createTask, getTasks, getTaskId, updateTask, deleteTask } from "../controller/taskController.js";
+import {
+  createTask,
+  getTasks,
+  getTaskId,
+  updateTask,
+  deleteTask,
+} from "../controller/taskController.js";
 
 export const router = express.Router();
-router.post("/", createTask);
+router.post("/", taskValidations, validate, createTask);
 router.get("/", getTasks);
-router.get("/:id", getTaskId);
-router.put("/:id", updateTask);
-router.delete("/:id", deleteTask);
-
+router.get("/:id", taskIdValidation, validate, getTaskId);
+router.put("/:id", taskIdValidation, validate, updateTask);
+router.delete("/:id", taskIdValidation, validate, deleteTask);
