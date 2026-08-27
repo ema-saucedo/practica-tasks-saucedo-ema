@@ -45,7 +45,19 @@ export const updateTaskValidations = [
     body("title")
         .optional()
         .notEmpty()
-        .withMessage("El titulo no puede estar vacio"),
+        .withMessage("El titulo no puede estar vacio")
+        .custom(async (title, { req }) => {
+
+            const task = await Task.findOne({
+                where: { title: title }
+            });
+
+            if (task && task.id != req.params.id) {
+                throw new Error("El titulo ya esta registrado");
+            }
+
+            return true;
+        }),
 
     body("description")
         .optional()

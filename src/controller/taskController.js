@@ -1,3 +1,4 @@
+import { matchedData } from "express-validator";
 import { Task, User } from "../model/index.js";
 
 export const createTask = async (req, res) => {
@@ -92,15 +93,15 @@ export const updateTask = async (req, res) => {
       });
     }
 
-    await taskUpdate.update({
-      title,
-      description,
-      isComplete,
-    });
+    const data = matchedData(req);
 
-    res.status(200).json({
-      message: "Tarea Actualizada",
-    });
+    await taskUpdate.update(data)
+
+    return res.status(200).json({
+      message:"La tarea se actualizó correctamente.",
+      taskUpdate
+    })
+
   } catch (error) {
     res.status(500).json({
       message: "Error al actualizar la tarea",

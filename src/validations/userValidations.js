@@ -3,10 +3,12 @@ import { modelUser } from "../model/modelUser.js";
 
 export const userValidations = [
     body("name")
-        .notEmpty()
-        .withMessage("El nombre es obligatorio"),
+    .optional()
+    .notEmpty()
+    .withMessage("El nombre es obligatorio"),
 
     body("email")
+    .optional()
     .notEmpty()
     .withMessage("El email es obligatorio")
     .isEmail()
