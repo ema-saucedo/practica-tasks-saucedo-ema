@@ -1,3 +1,4 @@
+import { matchedData } from "express-validator";
 import { User, personalData } from "../model/index.js";
 
 export const createPersonalData = async (req, res) => {
@@ -56,4 +57,81 @@ export const getPersonalData = async (req, res) => {
             error: error.message,
         });
     }
+};
+
+export const getPersonalDataById = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const data = await personalData.findByPk(id);
+
+        if (!data) {
+            return res.status(404).json({
+                message: "Datos no encontrados"
+            });
+        }
+
+        return res.status(200).json(data);
+
+    } catch (error) {
+        return res.status(500).json({
+            message: "Error al buscar los datos",
+            error: error.message
+        });
+    }
+};
+
+export const updatePersonalData = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const personalDataUpdate = await personalData.findByPk(id);
+
+    if (!personalDataUpdate) {
+      return res.status(404).json({
+        message: "Datos no encontrados",
+      });
+    }
+    const data = matchedData(req, {
+    locations: ["body"]
+    });
+
+    await personalDataUpdate.update(data)
+
+    return res.status(200).json({
+      message:"Los datos se actualizaron correctamente.",
+      personalDataUpdate
+    })
+
+  } catch (error) {
+    res.status(500).json({
+      message: "Error al actualizar la datos",
+      error: error.message,
+    });
+  }
+};
+
+export const deletePersonalData = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const personalDataDelete = await personalData.findByPk(id);
+
+    if (!personalDataDelete) {
+      return res.status(404).json({
+        message: "Datos no encontrados",
+      });
+    }
+
+    await personalDataDelete.destroy();
+
+    res.status(200).json({
+      message: "Datos eliminados correctamente",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error al eliminar los datos",
+      error: error.message,
+    });
+  }
 };

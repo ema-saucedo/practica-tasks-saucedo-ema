@@ -62,7 +62,6 @@ export const updateUser = async (req, res) => {
     try {
 
         const { id } = req.params;
-        const { name, email, password } = req.body;
         const user = await User.findByPk(id);
 
         if (!user) {
@@ -70,13 +69,9 @@ export const updateUser = async (req, res) => {
                 message: "Usuario no encontrado"
             });
         }
-//matchedData tiene unicamente como objetivo tomar los datos que pasaron por las validaciones. Esto permite que se pueda trabajar con datos validados en vez de mandar datos que no sepamos si estan bien validados.
-        const data = matchedData(req);
-
-        await user.update(data);
-        return res.status(200).json({
-            message: "Usuario actualizado con exito.",
-            user
+//matchedData tiene unicamente como objetivo tomar los datos que pasaron por las validaciones. Esto permite que se pueda trabajar con datos validados en vez de mandar datos que no sepamos si estan bien validados.  Se hace el locations: ["body"] para solo traer los datos que estan dentro del body asi no traemos el id.
+         const data = matchedData(req, {
+        locations: ["body"]
         });
 
     } catch (error) {
