@@ -10,7 +10,7 @@ export const router = express.Router();
 router.post("/", personalDataValidations, validate, createPersonalData);
 router.get("/", getPersonalData);
 router.get("/:id", getPersonalDataById);
-router.put("/:id", updatePersonalDataValidations, validate, updatePersonalData);
+router.put("/:id", updatePersongit alDataValidations, validate, updatePersonalData);
 router.delete("/:id", deletePersonalData);
 
 

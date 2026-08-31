@@ -5,8 +5,8 @@ export const tagValidations = [
     body("name")
         .notEmpty()
         .withMessage("El nombre es obligatorio")
-        .isLength({ max: 8 })
-        .withMessage("El nombre debe tener como maximo 8 caracteres")
+        .isLength({ max: 12 })
+        .withMessage("El nombre debe tener como maximo 12 caracteres")
         .custom(async (name) => {
             const tagExists = await tag.findOne({
                 where: { name: name }
@@ -18,4 +18,12 @@ export const tagValidations = [
 
             return true;
         })
+];
+export const updateTagValidations = [
+
+    body("name")
+        .optional()
+        .notEmpty()
+        .withMessage("El nombre no puede estar vacío")
+
 ];
